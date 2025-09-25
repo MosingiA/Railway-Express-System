@@ -1,4 +1,4 @@
-{ margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -7,7 +7,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-image: url("https://t3.ftcdn.net/jpg/05/64/75/66/240_F_564756616_HjgeO1kyLrV2N20aWyemWK8LajvDVNRW.jpg");
+  
 }
 
 .App {

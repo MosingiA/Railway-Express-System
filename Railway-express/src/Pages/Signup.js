@@ -17,7 +17,7 @@ const SignUpSchema = Yup.object().shape({
 
 export default function SignUp({ onLogin }) {
   const nav = useNavigate();
-
+  
   return (
     <div className="signup-container">
       <video className="signup-background-video" autoPlay muted loop>
@@ -39,7 +39,7 @@ export default function SignUp({ onLogin }) {
                   },
                   body: JSON.stringify(values),
                 });
-
+                
                 if (response.ok) {
                   alert('Signup successful!');
                   nav("/login");
@@ -61,43 +61,42 @@ export default function SignUp({ onLogin }) {
                   <ErrorMessage name="name" component="div" className="signup-error" />
                 </div>
 
-            <div className="signup-form-group">
-              <label>Email</label>
-              <Field name="email" className="signup-form-control" />
-              <ErrorMessage name="email" component="div" className="signup-error" />
-            </div>
+                <div className="signup-form-group">
+                  <label>Email</label>
+                  <Field name="email" className="signup-form-control" />
+                  <ErrorMessage name="email" component="div" className="signup-error" />
+                </div>
 
-            <div className="signup-form-group">
-              <label>Password</label>
-              <Field type="password" name="password" className="signup-form-control" />
-              <ErrorMessage name="password" component="div" className="signup-error" />
-            </div>
+                <div className="signup-form-group">
+                  <label>Password</label>
+                  <Field type="password" name="password" className="signup-form-control" />
+                  <ErrorMessage name="password" component="div" className="signup-error" />
+                </div>
 
-            <div className="signup-form-group">
-              <label>Age</label>
-              <Field type="number" name="age" className="signup-form-control" />
-              <ErrorMessage name="age" component="div" className="signup-error" />
-            </div>
+                <div className="signup-form-group">
+                  <label>Age</label>
+                  <Field type="number" name="age" className="signup-form-control" />
+                  <ErrorMessage name="age" component="div" className="signup-error" />
+                </div>
 
-            <div className="signup-form-group">
-              <label>Phone Number</label>
-              <Field name="phone_number" className="signup-form-control" />
-              <ErrorMessage name="phone_number" component="div" className="signup-error" />
-            </div>
+                <div className="signup-form-group">
+                  <label>Phone Number</label>
+                  <Field name="phone_number" className="signup-form-control" />
+                  <ErrorMessage name="phone_number" component="div" className="signup-error" />
+                </div>
 
-            <button type="submit" disabled={isSubmitting} className="signup-btn">
-              {isSubmitting ? "Creating Account..." : "Sign Up"}
-            </button>
-          </Form>
-        )}
-      </Formik>
-      
-      <p style={{textAlign: 'center', marginTop: '20px'}}>
-        Already have an account? <Link to="/login">Login here</Link>
-      </p>
+                <button type="submit" disabled={isSubmitting} className="signup-btn">
+                  {isSubmitting ? "Creating Account..." : "Sign Up"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+          
+          <p style={{textAlign: 'center', marginTop: '20px'}}>
+            Already have an account? <Link to="/login">Login here</Link>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
   );
 }
-

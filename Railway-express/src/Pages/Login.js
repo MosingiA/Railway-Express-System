@@ -11,7 +11,7 @@ const LoginSchema = Yup.object().shape({
 
 export default function Login({ onLogin }) {
   const nav = useNavigate();
-
+  
   return (
     <div className="login-container">
       <video className="background-video" autoPlay muted loop>
@@ -33,7 +33,7 @@ export default function Login({ onLogin }) {
       },
       body: JSON.stringify(values),
     });
-
+    
     if (response.ok) {
       onLogin();
       nav("/");
@@ -47,31 +47,31 @@ export default function Login({ onLogin }) {
   setSubmitting(false);
 }}
 
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div className="form-group">
-              <label>Email</label>
-              <Field name="email" className="form-control" />
-              <ErrorMessage name="email" component="div" className="error" />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <Field name="password" type="password" className="form-control" />
-              <ErrorMessage name="password" component="div" className="error" />
-            </div>
-            <button type="submit" disabled={isSubmitting} className="btn btn-primary">
-              {isSubmitting ? "Logging in..." : "Log In"}
-            </button>
-          </Form>
-        )}
-      </Formik>
-      
-      <p style={{textAlign: 'center', marginTop: '20px'}}>
-        Don't have an account? <Link to="/signup">Sign up here</Link>
-      </p>
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="form-group">
+                  <label>Email</label>
+                  <Field name="email" className="form-control" />
+                  <ErrorMessage name="email" component="div" className="error" />
+                </div>
+                <div className="form-group">
+                  <label>Password</label>
+                  <Field name="password" type="password" className="form-control" />
+                  <ErrorMessage name="password" component="div" className="error" />
+                </div>
+                <button type="submit" disabled={isSubmitting} className="btn btn-primary">
+                  {isSubmitting ? "Logging in..." : "Log In"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+          
+          <p style={{textAlign: 'center', marginTop: '20px'}}>
+            Don't have an account? <Link to="/signup">Sign up here</Link>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
   );
 }

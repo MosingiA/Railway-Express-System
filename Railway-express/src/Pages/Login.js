@@ -25,27 +25,28 @@ export default function Login({ onLogin }) {
             initialValues={{ email: "", password: "" }}
             validationSchema={LoginSchema}
             onSubmit={async (values, { setSubmitting }) => {
-  try {
-    const response = await fetch('http://localhost:5555/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    });
-    
-    if (response.ok) {
-      onLogin();
-      nav("/");
-    } else {
-      const error = await response.json();
-      alert(error.message);
-    }
-  } catch (error) {
-    alert('Login failed');
-  }
-  setSubmitting(false);
-}}
+              try {
+                const response = await fetch('http://localhost:5555/login', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(values),
+                });
+                
+                if (response.ok) {
+                  onLogin();
+                  nav("/");
+                } else {
+                  const error = await response.json();
+                  alert(error.message);
+                }
+              } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed: ' + error.message);
+              }
+              setSubmitting(false);
+            }}
 
           >
             {({ isSubmitting }) => (

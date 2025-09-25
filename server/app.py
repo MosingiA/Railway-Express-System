@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app , origins=["http://localhost:3000"])
+CORS(app, origins=["http://localhost:3000", "http://localhost:5173"])
 
 @app.route('/')
 def home():

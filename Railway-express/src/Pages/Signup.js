@@ -48,7 +48,8 @@ export default function SignUp({ onLogin }) {
                   alert(error.message);
                 }
               } catch (error) {
-                alert('Signup failed');
+                console.error('Signup error:', error);
+                alert('Signup failed: ' + error.message);
               }
               setSubmitting(false);
             }}

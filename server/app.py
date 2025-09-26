@@ -13,7 +13,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app, origins=["http://localhost:3000", "http://localhost:5173", "https://*.vercel.app"])
+CORS(app, 
+     origins=["http://localhost:3000", "http://localhost:5173", "https://*.vercel.app", "https://railway-express-system-imjf-git-main-afya-mosingis-projects.vercel.app"],
+     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
 
 @app.route('/')
 def home():

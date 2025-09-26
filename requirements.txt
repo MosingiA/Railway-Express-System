@@ -1,6 +1,1 @@
-Flask
-Flask-SQLAlchemy
-Flask-Migrate
-Flask-Cors
-flask-restful
-gunicorn
+-i https://pypi.org/simple

@@ -22,6 +22,7 @@ if MODELS_AVAILABLE:
     api = Api(app)
 else:
     api = None
+# Fixed CORS configuration - single origin setting
 CORS(app, origins="*", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], allow_headers=["Content-Type", "Authorization"])
 
 @app.route('/')

@@ -215,7 +215,6 @@ api.add_resource(Trains, '/trains')
 api.add_resource(Passengers, '/passengers')
 api.add_resource(Tickets, '/tickets')
 api.add_resource(TicketById, '/tickets/<int:id>')
-api.add_resource(Login, '/login')
-api.add_resource(Signup, '/signup')
+# Login and Signup now use Flask routes above
 if __name__ == '__main__':
     app.run(debug=True, port=5555)

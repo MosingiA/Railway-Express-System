@@ -67,8 +67,8 @@ npm run dev
 ```
 
 ### Access the Application
-- Backend API: http://localhost:5555
-- Frontend: http://localhost:5173
+- Backend API:https://railway-express-system-5.onrender.com/
+- Frontend: https://railway-express-system-imjf-git-main-afya-mosingis-projects.vercel.app/
 
 ### Test Login
 Use these credentials to test the application:
@@ -107,13 +107,6 @@ Railway-Express-System/
 
 
 
-## Future Improvements
-
-- Add real payment gateway integration
-- Implement email notifications for bookings
-- Add train seat selection feature
-- Create mobile-responsive design
-- Add booking history and analytics
 
 ## Deployment
 

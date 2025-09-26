@@ -46,6 +46,15 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = jsonify({})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+        return response
+
 @app.route('/')
 def home():
     return {'message': 'Railway Management System API'}
@@ -67,6 +76,35 @@ def simple_stations():
         {'id': 1, 'name': 'Nairobi Central', 'city': 'Nairobi'},
         {'id': 2, 'name': 'Mombasa Terminus', 'city': 'Mombasa'}
     ]
+
+@app.route('/signup', methods=['POST'])
+def signup_route():
+    try:
+        data = request.get_json()
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=data['password'],
+            age=data['age'],
+            phone_number=data['phone_number']
+        )
+        db.session.add(user)
+        db.session.commit()
+        return {'message': 'User created successfully'}, 201
+    except Exception as e:
+        return {'message': str(e)}, 400
+
+@app.route('/login', methods=['POST'])
+def login_route():
+    data = request.get_json()
+    if not data.get('email') or not data.get('password'):
+        return {'message': 'Email and password required'}, 400
+    
+    user = User.query.filter_by(email=data['email']).first()
+    if user and user.password == data['password']:
+        return {'message': 'Login successful', 'user': user.to_dict()}, 200
+    
+    return {'message': 'Invalid credentials'}, 401
 
 class Stations(Resource):
     def get(self):

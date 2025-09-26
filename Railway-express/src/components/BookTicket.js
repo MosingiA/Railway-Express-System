@@ -27,8 +27,8 @@ function BookTicket() {
 
   useEffect(() => {
     Promise.all([
-      fetch('https://railway-express-system-5.onrender.com/trains').then(res => res.json()),
-      fetch('https://railway-express-system-5.onrender.com/stations').then(res => res.json())
+      fetch('https://railway-express-system-5.onrender.com/simple-trains').then(res => res.json()),
+      fetch('https://railway-express-system-5.onrender.com/simple-stations').then(res => res.json())
     ])
     .then(([trainsData, stationsData]) => {
       setTrains(trainsData);

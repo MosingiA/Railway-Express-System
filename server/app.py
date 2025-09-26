@@ -1,19 +1,27 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_restful import Api, Resource
-from sqlalchemy.orm import joinedload
+try:
+    from flask_migrate import Migrate
+    from flask_restful import Api, Resource
+    from sqlalchemy.orm import joinedload
+    from models import db, Station, Train, TrainRoute, Passenger, Ticket, User
+    MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Import error: {e}")
+    MODELS_AVAILABLE = False
 from datetime import datetime
-from models import db, Station, Train, TrainRoute, Passenger, Ticket, User
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///railway.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app)
-migrate = Migrate(app, db)
-api = Api(app)
+if MODELS_AVAILABLE:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///railway.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.init_app(app)
+    migrate = Migrate(app, db)
+    api = Api(app)
+else:
+    api = None
 CORS(app, resources={
     r"/*": {
         "origins": "*",
@@ -187,19 +195,21 @@ class Signup(Resource):
             return {'message': str(e)}, 400
 
 # Add routes
-api.add_resource(Stations, '/stations')
-api.add_resource(Trains, '/trains')
-api.add_resource(Passengers, '/passengers')
-api.add_resource(Tickets, '/tickets')
-api.add_resource(TicketById, '/tickets/<int:id>')
-api.add_resource(Login, '/login')
-api.add_resource(Signup, '/signup')
+if MODELS_AVAILABLE and api:
+    api.add_resource(Stations, '/stations')
+    api.add_resource(Trains, '/trains')
+    api.add_resource(Passengers, '/passengers')
+    api.add_resource(Tickets, '/tickets')
+    api.add_resource(TicketById, '/tickets/<int:id>')
+    api.add_resource(Login, '/login')
+    api.add_resource(Signup, '/signup')
 if __name__ == '__main__':
     import os
     
     # Create database tables
-    with app.app_context():
-        db.create_all()
+    if MODELS_AVAILABLE:
+        with app.app_context():
+            db.create_all()
     
     port = int(os.environ.get('PORT', 5555))
     app.run(debug=True, host='0.0.0.0', port=port)

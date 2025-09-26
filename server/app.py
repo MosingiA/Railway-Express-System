@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from sqlalchemy.orm import joinedload
+from datetime import datetime
 from models import db, Station, Train, TrainRoute, Passenger, Ticket, User
 
 
@@ -13,11 +14,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app, origins=["http://localhost:3000", "http://localhost:5173", "https://railway-express-system-git-main-mosingia.vercel.app", "https://railway-express-system-mosingia.vercel.app", "*"])
+CORS(app, origins="*")
 
 @app.route('/')
 def home():
     return {'message': 'Railway Management System API'}
+
+@app.route('/test')
+def test():
+    return {'status': 'Backend is working', 'timestamp': str(datetime.now())}
 
 class Stations(Resource):
     def get(self):

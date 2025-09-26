@@ -13,7 +13,7 @@ function Stations() {
   const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5555/stations')
+    fetch('https://railway-express-system-5.onrender.com/stations')
       .then(res => res.json())
       .then(data => {
         setStations(data);
@@ -27,7 +27,7 @@ function Stations() {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch('http://localhost:5555/stations', {
+      const response = await fetch('https://railway-express-system-5.onrender.com/stations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)

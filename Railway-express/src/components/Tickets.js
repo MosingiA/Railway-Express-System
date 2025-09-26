@@ -11,7 +11,7 @@ function Tickets() {
   }, []);
 
   const fetchTickets = () => {
-    fetch('http://localhost:5555/tickets')
+    fetch('https://railway-express-system-5.onrender.com/tickets')
       .then(res => res.json())
       .then(data => {
         setTickets(data);
@@ -25,7 +25,7 @@ function Tickets() {
 
   const deleteTicket = (id) => {
     if (window.confirm('Are you sure you want to cancel this ticket?')) {
-      fetch(`http://localhost:5555/tickets/${id}`, {
+      fetch(`https://railway-express-system-5.onrender.com/tickets/${id}`, {
         method: 'DELETE'
       })
       .then(() => {

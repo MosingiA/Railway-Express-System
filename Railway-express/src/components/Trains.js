@@ -7,7 +7,7 @@ function Trains() {
   const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5555/trains')
+    fetch('https://railway-express-system-5.onrender.com/trains')
       .then(res => res.json())
       .then(data => {
         setTrains(data);

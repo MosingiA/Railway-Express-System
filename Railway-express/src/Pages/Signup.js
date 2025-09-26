@@ -32,7 +32,7 @@ export default function SignUp({ onLogin }) {
             validationSchema={SignUpSchema}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                const response = await fetch('http://localhost:5555/signup', {
+                const response = await fetch('https://railway-express-system-5.onrender.com/signup', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

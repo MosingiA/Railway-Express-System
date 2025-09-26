@@ -27,8 +27,8 @@ function BookTicket() {
 
   useEffect(() => {
     Promise.all([
-      fetch('http://localhost:5555/trains').then(res => res.json()),
-      fetch('http://localhost:5555/stations').then(res => res.json())
+      fetch('https://railway-express-system-5.onrender.com/trains').then(res => res.json()),
+      fetch('https://railway-express-system-5.onrender.com/stations').then(res => res.json())
     ])
     .then(([trainsData, stationsData]) => {
       setTrains(trainsData);
@@ -44,7 +44,7 @@ function BookTicket() {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       // Create passenger first
-      const passengerRes = await fetch('http://localhost:5555/passengers', {
+      const passengerRes = await fetch('https://railway-express-system-5.onrender.com/passengers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -56,7 +56,7 @@ function BookTicket() {
       const passenger = await passengerRes.json();
 
       // Create ticket
-      const ticketRes = await fetch('http://localhost:5555/tickets', {
+      const ticketRes = await fetch('https://railway-express-system-5.onrender.com/tickets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

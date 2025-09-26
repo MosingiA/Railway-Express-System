@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from sqlalchemy.orm import joinedload
+from datetime import datetime
 from models import db, Station, Train, TrainRoute, Passenger, Ticket, User
 
 
@@ -13,15 +14,36 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app, 
-     origins=["http://localhost:3000", "http://localhost:5173", "https://*.vercel.app", "https://railway-express-system-imjf-git-main-afya-mosingis-projects.vercel.app"],
-     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-     allow_headers=["Content-Type", "Authorization"],
-     supports_credentials=True)
+CORS(app)
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
 @app.route('/')
 def home():
     return {'message': 'Railway Management System API'}
+
+@app.route('/test')
+def test():
+    return {'status': 'Backend is working', 'timestamp': str(datetime.now())}
+
+@app.route('/simple-trains')
+def simple_trains():
+    return [
+        {'id': 1, 'name': 'Madaraka Express', 'capacity': 300, 'departure_time': '08:00'},
+        {'id': 2, 'name': 'Safari Express', 'capacity': 250, 'departure_time': '14:00'}
+    ]
+
+@app.route('/simple-stations')
+def simple_stations():
+    return [
+        {'id': 1, 'name': 'Nairobi Central', 'city': 'Nairobi'},
+        {'id': 2, 'name': 'Mombasa Terminus', 'city': 'Mombasa'}
+    ]
 
 class Stations(Resource):
     def get(self):

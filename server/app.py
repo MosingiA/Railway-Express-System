@@ -24,6 +24,20 @@ def home():
 def test():
     return {'status': 'Backend is working', 'timestamp': str(datetime.now())}
 
+@app.route('/simple-trains')
+def simple_trains():
+    return [
+        {'id': 1, 'name': 'Madaraka Express', 'capacity': 300, 'departure_time': '08:00'},
+        {'id': 2, 'name': 'Safari Express', 'capacity': 250, 'departure_time': '14:00'}
+    ]
+
+@app.route('/simple-stations')
+def simple_stations():
+    return [
+        {'id': 1, 'name': 'Nairobi Central', 'city': 'Nairobi'},
+        {'id': 2, 'name': 'Mombasa Terminus', 'city': 'Mombasa'}
+    ]
+
 class Stations(Resource):
     def get(self):
         stations = [station.to_dict() for station in Station.query.all()]

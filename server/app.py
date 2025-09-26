@@ -3,7 +3,8 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from sqlalchemy.orm import joinedload
-from models import db, Station, Train, TrainRoute, Passenger, Ticket, User
+from server.models import db, Station, Train, TrainRoute, Passenger, Ticket, User
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///railway.db'

@@ -33,7 +33,11 @@ export default function SignUp({ onLogin }) {
             validationSchema={SignUpSchema}
             onSubmit={async (values, { setSubmitting }) => {
               try {
+<<<<<<< HEAD
                 const response = await fetch(`${API_BASE_URL}/signup`, {
+=======
+                const response = await fetch('https://railway-express-system-5.onrender.com/signup', {
+>>>>>>> da3fb59a2af3b48b13e275940a504c4f74e7090d
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

@@ -54,6 +54,35 @@ def simple_stations():
         {'id': 2, 'name': 'Mombasa Terminus', 'city': 'Mombasa'}
     ]
 
+@app.route('/signup', methods=['POST'])
+def signup_route():
+    try:
+        data = request.get_json()
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=data['password'],
+            age=data['age'],
+            phone_number=data['phone_number']
+        )
+        db.session.add(user)
+        db.session.commit()
+        return {'message': 'User created successfully'}, 201
+    except Exception as e:
+        return {'message': str(e)}, 400
+
+@app.route('/login', methods=['POST'])
+def login_route():
+    data = request.get_json()
+    if not data.get('email') or not data.get('password'):
+        return {'message': 'Email and password required'}, 400
+    
+    user = User.query.filter_by(email=data['email']).first()
+    if user and user.password == data['password']:
+        return {'message': 'Login successful', 'user': user.to_dict()}, 200
+    
+    return {'message': 'Invalid credentials'}, 401
+
 class Stations(Resource):
     def get(self):
         stations = [station.to_dict() for station in Station.query.all()]

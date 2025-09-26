@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 import "./Login.css";
 
 const LoginSchema = Yup.object().shape({
@@ -26,7 +27,7 @@ export default function Login({ onLogin }) {
             validationSchema={LoginSchema}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                const response = await fetch('http://localhost:5555/login', {
+                const response = await fetch(`${API_BASE_URL}/login`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

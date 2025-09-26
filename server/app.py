@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app, origins=["http://localhost:3000", "http://localhost:5173"])
+CORS(app, origins=["http://localhost:3000", "http://localhost:5173", "https://*.vercel.app", "https://railway-express-system-git-main-afya-mosingis-projects.vercel.app"])
 
 @app.route('/')
 def home():
@@ -153,4 +153,11 @@ api.add_resource(TicketById, '/tickets/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(Signup, '/signup')
 if __name__ == '__main__':
-    app.run(debug=True, port=5555)
+    import os
+    
+    # Create database tables
+    with app.app_context():
+        db.create_all()
+    
+    port = int(os.environ.get('PORT', 5555))
+    app.run(debug=True, host='0.0.0.0', port=port)

@@ -14,23 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
-CORS(app)
-
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-    return response
-
-@app.before_request
-def handle_preflight():
-    if request.method == "OPTIONS":
-        response = jsonify({})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        return response
+CORS(app, origins="*", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], allow_headers=["Content-Type", "Authorization"])
 
 @app.route('/')
 def home():
@@ -58,30 +42,40 @@ def simple_stations():
 def signup_route():
     try:
         data = request.get_json()
+        if not data:
+            return {'message': 'No data provided'}, 400
+            
         user = User(
-            name=data['name'],
-            email=data['email'],
-            password=data['password'],
-            age=data['age'],
-            phone_number=data['phone_number']
+            name=data.get('name'),
+            email=data.get('email'),
+            password=data.get('password'),
+            age=data.get('age'),
+            phone_number=data.get('phone_number')
         )
         db.session.add(user)
         db.session.commit()
         return {'message': 'User created successfully'}, 201
     except Exception as e:
-        return {'message': str(e)}, 400
+        db.session.rollback()
+        return {'message': f'Signup failed: {str(e)}'}, 400
 
 @app.route('/login', methods=['POST'])
 def login_route():
-    data = request.get_json()
-    if not data.get('email') or not data.get('password'):
-        return {'message': 'Email and password required'}, 400
-    
-    user = User.query.filter_by(email=data['email']).first()
-    if user and user.password == data['password']:
-        return {'message': 'Login successful', 'user': user.to_dict()}, 200
-    
-    return {'message': 'Invalid credentials'}, 401
+    try:
+        data = request.get_json()
+        if not data:
+            return {'message': 'No data provided'}, 400
+            
+        if not data.get('email') or not data.get('password'):
+            return {'message': 'Email and password required'}, 400
+        
+        user = User.query.filter_by(email=data['email']).first()
+        if user and user.password == data['password']:
+            return {'message': 'Login successful', 'user': user.to_dict()}, 200
+        
+        return {'message': 'Invalid credentials'}, 401
+    except Exception as e:
+        return {'message': f'Login failed: {str(e)}'}, 500
 
 class Stations(Resource):
     def get(self):

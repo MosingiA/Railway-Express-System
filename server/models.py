@@ -1,12 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 import random
 import string
 
 db = SQLAlchemy()
 
-class Station(db.Model, SerializerMixin):
+class Station(db.Model):
     __tablename__ = 'stations'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -15,9 +14,14 @@ class Station(db.Model, SerializerMixin):
 
     train_routes = db.relationship('TrainRoute', back_populates='station')
 
-    serialize_rules = ('-train_routes.station',)
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'city': self.city
+        }
 
-class Train(db.Model, SerializerMixin):
+class Train(db.Model):
     __tablename__ = 'trains'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -28,9 +32,15 @@ class Train(db.Model, SerializerMixin):
     tickets = db.relationship('Ticket', back_populates='train')
     train_routes = db.relationship('TrainRoute', back_populates='train')
 
-    serialize_rules = ('-tickets.train', '-train_routes.train')
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'capacity': self.capacity,
+            'departure_time': self.departure_time
+        }
 
-class Passenger(db.Model, SerializerMixin):
+class Passenger(db.Model):
     __tablename__ = 'passengers'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -40,7 +50,13 @@ class Passenger(db.Model, SerializerMixin):
 
     tickets = db.relationship('Ticket', back_populates='passenger')
 
-    serialize_rules = ('-tickets.passenger',)
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'phone_number': self.phone_number
+        }
 
     @validates('age')
     def validate_age(self, key, age):
@@ -48,7 +64,7 @@ class Passenger(db.Model, SerializerMixin):
             raise ValueError("Age must be between 0 and 120")
         return age
 
-class TrainRoute(db.Model, SerializerMixin):
+class TrainRoute(db.Model):
     __tablename__ = 'train_routes'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -60,9 +76,16 @@ class TrainRoute(db.Model, SerializerMixin):
     train = db.relationship('Train', back_populates='train_routes')
     station = db.relationship('Station', back_populates='train_routes')
 
-    serialize_rules = ('-train.train_routes', '-station.train_routes')
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'train_id': self.train_id,
+            'station_id': self.station_id,
+            'price': self.price,
+            'arrival_time': self.arrival_time
+        }
 
-class Ticket(db.Model, SerializerMixin):
+class Ticket(db.Model):
     __tablename__ = 'tickets'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -80,7 +103,19 @@ class Ticket(db.Model, SerializerMixin):
     train = db.relationship('Train', back_populates='tickets')
     user = db.relationship('User', back_populates='tickets')
 
-    serialize_rules = ('-passenger.tickets', '-train.tickets', '-user.tickets')
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'ticket_number': self.ticket_number,
+            'passenger_id': self.passenger_id,
+            'train_id': self.train_id,
+            'user_id': self.user_id,
+            'from_station': self.from_station,
+            'to_station': self.to_station,
+            'payment_method': self.payment_method,
+            'payment_status': self.payment_status,
+            'price': self.price
+        }
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -89,7 +124,8 @@ class Ticket(db.Model, SerializerMixin):
 
     def generate_ticket_number(self):
         return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-class User(db.Model, SerializerMixin):
+
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -101,7 +137,14 @@ class User(db.Model, SerializerMixin):
 
     tickets = db.relationship('Ticket', back_populates='user')
 
-    serialize_rules = ('-password', '-tickets.user')
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'age': self.age,
+            'phone_number': self.phone_number
+        }
 
     @validates('age')
     def validate_age(self, key, age):

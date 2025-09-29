@@ -43,9 +43,7 @@ The application uses 6 main database models:
 5. **TrainRoute** - Links trains to stations with pricing
 6. **Ticket** - Booking records and payment status
 
-## 🚀 Getting Started
-
-
+##  Getting Started
 
 ### Backend Setup
 ```bash

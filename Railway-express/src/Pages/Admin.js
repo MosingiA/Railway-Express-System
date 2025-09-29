@@ -22,7 +22,7 @@ export default function Admin() {
     validationSchema={TrainSchema} 
     onSubmit={async (vals, { setSubmitting, resetForm }) => {
       try {
-        const response = await fetch('https://railway-express-system-5.onrender.com/trains', {
+        const response = await fetch('https://railway-express-system-2-ni6u.onrender.com/trains', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

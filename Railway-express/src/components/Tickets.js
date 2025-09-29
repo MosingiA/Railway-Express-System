@@ -25,7 +25,7 @@ function Tickets() {
 
   const deleteTicket = (id) => {
     if (window.confirm('Are you sure you want to cancel this ticket?')) {
-      fetch(`https://railway-express-system-5.onrender.com/tickets/${id}`, {
+      fetch(`https://railway-express-system-2-ni6u.onrender.com/tickets/${id}`, {
         method: 'DELETE'
       })
       .then(() => {

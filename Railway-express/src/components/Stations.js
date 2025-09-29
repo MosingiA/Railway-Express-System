@@ -27,7 +27,7 @@ function Stations() {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch('https://railway-express-system-5.onrender.com/stations', {
+      const response = await fetch('https://railway-express-system-2-ni6u.onrender.com/stations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)

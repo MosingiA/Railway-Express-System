@@ -13,7 +13,7 @@ function Stations() {
   const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
-    fetch('https://railway-express-system-5.onrender.com/stations')
+    fetch('https://railway-express-system-2-ni6u.onrender.com/stations')
       .then(res => res.json())
       .then(data => {
         setStations(data);

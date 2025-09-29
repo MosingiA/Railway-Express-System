@@ -11,7 +11,7 @@ function Tickets() {
   }, []);
 
   const fetchTickets = () => {
-    fetch('https://railway-express-system-5.onrender.com/tickets')
+    fetch('https://railway-express-system-2-ni6u.onrender.com//tickets')
       .then(res => res.json())
       .then(data => {
         setTickets(data);

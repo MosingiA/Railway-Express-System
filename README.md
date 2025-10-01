@@ -2,12 +2,12 @@
 
 A full-stack railway management application built with Flask and React. This system allows users to book train tickets, manage passengers, and provides admin functionality for managing trains and stations.
 
-## 🚀 Live Demo
+##  Live Demo
 
-- **Frontend**: [https://your-project-name.vercel.app](https://your-project-name.vercel.app)
-- **Backend API**: [https://railway-express-system-2-ni6u.onrender.com](https://railway-express-system-2-ni6u.onrender.com)
+- **Frontend**: [https://railway-express-system-imjf.vercel.app/]
+- **Backend API**: [https://railway-express-system-2-ni6u.onrender.com]
 
-## ✨ Features
+##  Features
 
 - **User Authentication**: Secure login and registration system
 - **Train Management**: Browse available trains and schedules
@@ -16,13 +16,13 @@ A full-stack railway management application built with Flask and React. This sys
 - **Admin Dashboard**: Administrative controls for trains and stations
 - **Real-time Updates**: Live booking and availability updates
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend:**
-- React 18
+- React 
 - React Router (navigation)
 - Formik & Yup (form handling and validation)
-- CSS3 (styling)
+- CSS (styling)
 - Vite (build tool)
 
 **Backend:**
@@ -32,7 +32,7 @@ A full-stack railway management application built with Flask and React. This sys
 - Flask-CORS (cross-origin requests)
 - SQLite/PostgreSQL (database)
 
-## 📊 Database Models
+##  Database Models
 
 The application uses 6 main database models:
 
@@ -43,12 +43,7 @@ The application uses 6 main database models:
 5. **TrainRoute** - Links trains to stations with pricing
 6. **Ticket** - Booking records and payment status
 
-## 🚀 Getting Started
-
-### Prerequisites
-- Python 3.8+
-- Node.js 16+
-- npm or yarn
+##  Getting Started
 
 ### Backend Setup
 ```bash
@@ -65,7 +60,7 @@ npm install
 npm run dev
 ```
 
-## 🌐 API Endpoints
+##  API Endpoints
 
 **Authentication:**
 - `POST /login` - User login
@@ -77,14 +72,14 @@ npm run dev
 - `GET/POST /passengers` - Passenger operations
 - `GET/POST/PATCH/DELETE /tickets` - Ticket operations
 
-## 🔧 Environment Variables
+##  Environment Variables
 
 Create a `.env` file in the frontend directory:
 ```
 VITE_API_URL=https://railway-express-system-2-ni6u.onrender.com
 ```
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Railway-Express-System/
@@ -102,7 +97,7 @@ Railway-Express-System/
 └── README.md
 ```
 
-## 🚀 Deployment
+##  Deployment
 
 **Frontend (Vercel):**
 1. Fork this repository
@@ -112,28 +107,25 @@ Railway-Express-System/
 5. Deploy
 
 **Backend (Render):**
-1. Connect repository to Render
+1. Connect the repository to Render
 2. Set root directory to `server`
 3. Build command: `pip install -r requirements.txt`
-4. Start command: `gunicorn app:app`
+4. Start command: `gunicorn app: app`
 
-## 🧪 Test Credentials
+##  Test Credentials
 
 Use these credentials to test the application:
 - **Email**: afya@gmail.com
 - **Password**: 123456
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
+Afya Mosingi, Ivvy.
 
+
+HAPPY CODING!

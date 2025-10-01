@@ -38,44 +38,7 @@ def simple_stations():
         {'id': 2, 'name': 'Mombasa Terminus', 'city': 'Mombasa'}
     ]
 
-@app.route('/signup', methods=['POST'])
-def signup_route():
-    try:
-        data = request.get_json()
-        if not data:
-            return {'message': 'No data provided'}, 400
-            
-        user = User(
-            name=data.get('name'),
-            email=data.get('email'),
-            password=data.get('password'),
-            age=data.get('age'),
-            phone_number=data.get('phone_number')
-        )
-        db.session.add(user)
-        db.session.commit()
-        return {'message': 'User created successfully'}, 201
-    except Exception as e:
-        db.session.rollback()
-        return {'message': f'Signup failed: {str(e)}'}, 400
 
-@app.route('/login', methods=['POST'])
-def login_route():
-    try:
-        data = request.get_json()
-        if not data:
-            return {'message': 'No data provided'}, 400
-            
-        if not data.get('email') or not data.get('password'):
-            return {'message': 'Email and password required'}, 400
-        
-        user = User.query.filter_by(email=data['email']).first()
-        if user and user.password == data['password']:
-            return {'message': 'Login successful', 'user': user.to_dict()}, 200
-        
-        return {'message': 'Invalid credentials'}, 401
-    except Exception as e:
-        return {'message': f'Login failed: {str(e)}'}, 500
 
 class Stations(Resource):
     def get(self):
@@ -172,36 +135,42 @@ class TicketById(Resource):
         return {'message': 'Ticket deleted successfully'}, 200
 class Login(Resource):
     def post(self):
-        data = request.get_json()
+        try:
+            data = request.get_json()
+            if not data:
+                return {'message': 'No data provided'}, 400
+                
+            if not data.get('email') or not data.get('password'):
+                return {'message': 'Email and password required'}, 400
+            
+            user = User.query.filter_by(email=data['email']).first()
+            if user and user.password == data['password']:
+                return {'message': 'Login successful', 'user': user.to_dict()}, 200
+            
+            return {'message': 'Invalid credentials'}, 401
+        except Exception as e:
+            return {'message': f'Login failed: {str(e)}'}, 500
 
-        if not data.get('email') or not data.get('password'):
-            return {'message': 'Email and password required'}, 400
-        
-        # Check against database users
-        user = User.query.filter_by(email=data['email']).first()
-        
-        if user and user.password == data['password']:
-            return {'message': 'Login successful', 'user': user.to_dict()}, 200
-        
-        return {'message': 'Invalid credentials'}, 401
 class Signup(Resource):
     def post(self):
         try:
             data = request.get_json()
-
+            if not data:
+                return {'message': 'No data provided'}, 400
+                
             user = User(
-                name=data['name'],
-                email=data['email'],
-                password=data['password'],
-                age=data['age'],
-                phone_number=data['phone_number']
+                name=data.get('name'),
+                email=data.get('email'),
+                password=data.get('password'),
+                age=data.get('age'),
+                phone_number=data.get('phone_number')
             )
             db.session.add(user)
             db.session.commit()
-
             return {'message': 'User created successfully'}, 201
         except Exception as e:
-            return {'message': str(e)}, 400
+            db.session.rollback()
+            return {'message': f'Signup failed: {str(e)}'}, 400
 
 # Add routes
 api.add_resource(Stations, '/stations')
@@ -209,6 +178,7 @@ api.add_resource(Trains, '/trains')
 api.add_resource(Passengers, '/passengers')
 api.add_resource(Tickets, '/tickets')
 api.add_resource(TicketById, '/tickets/<int:id>')
-# Login and Signup now use Flask routes above
+api.add_resource(Login, '/login')
+api.add_resource(Signup, '/signup')
 if __name__ == '__main__':
     app.run(debug=True, port=5555)
